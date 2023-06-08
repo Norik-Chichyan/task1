@@ -1,0 +1,36 @@
+#name: AWS-access
+#
+#on:
+#  push:
+#    branches:
+#      - 'main'
+#permissions:
+#  id-token: write # This is required for requesting the JWT
+#  contents: read  # This is required for actions/checkout
+#jobs:
+#  scan-dockerfiles:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3.5.2
+#
+#      - name: Install Terraform
+#        uses: hashicorp/setup-terraform@v2.0.3
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: arn:aws:iam::034067736585:role/github_access_role
+#          role-session-name: MySessionName
+#          aws-region: us-east-1
+##
+##      - name: Terraform fmt
+##        id: fmt
+##        run: terraform fmt -check
+##        continue-on-error: true
+#
+#      - name: Initialize Terraform
+#        run: terraform init
+#
+#      - name: plan Terraform
+#        run: terraform plan --auto-approve
