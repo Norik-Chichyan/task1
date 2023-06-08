@@ -1,3 +1,19 @@
+resource "aws_security_group" "rds" {
+  name        = "rds-sg"
+  description = "Security group for RDS"
+
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    #cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [
+      aws_security_group.memcache.id  # Provide the ID of the source security group
+    ]
+  }
+}
+
 resource "aws_db_instance" "db_instance" {
   allocated_storage    = 10
   db_name              = "sia_db"
@@ -9,3 +25,7 @@ resource "aws_db_instance" "db_instance" {
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
 }
+
+vpc_security_group_ids = [
+    aws_security_group.rds.id  # Provide the ID of your RDS security group
+  ]
