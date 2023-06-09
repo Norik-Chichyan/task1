@@ -8,14 +8,14 @@ resource "aws_vpc" "dev-vpc" {
   }
 }
 
-resource "aws_subnet" "lambda" {
-  cidr_block = "10.0.1.0/24"
-  vpc_id = aws_vpc.dev-vpc.id
-
-  tags = {
-    Name = "lambda-subnet"
-  }
-}
+#resource "aws_subnet" "lambda" {
+#  cidr_block = "10.0.1.0/24"
+#  vpc_id = aws_vpc.dev-vpc.id
+#
+#  tags = {
+#    Name = "lambda-subnet"
+#  }
+#}
 resource "aws_subnet" "RDS-memcache" {
   cidr_block = "10.0.2.0/24"
   vpc_id = aws_vpc.dev-vpc.id
@@ -26,12 +26,7 @@ resource "aws_subnet" "RDS-memcache" {
   }
 }
 
-resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.lambda.id
-  route_table_id = aws_default_route_table.def_rt.id
-}
-
-resource "aws_route_table_association" "a" {
+resource "aws_route_table_association" "db-subnet-association" {
   subnet_id      = aws_subnet.RDS-memcache.id
   route_table_id = aws_default_route_table.def_rt.id
 }

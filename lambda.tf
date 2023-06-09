@@ -35,8 +35,6 @@ resource "aws_lambda_function" "back_lambda_function" {
   function_name = "my-lambda-function"
   handler       = "index.handler"
   runtime       = var.lambda_runtime
-  timeout       = 60
-  memory_size   = 128
   role          = aws_iam_role.iam_for_lambda.arn
   s3_bucket     = aws_s3_bucket.artifactes.id
   s3_key        = var.s3_backend

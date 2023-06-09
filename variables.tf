@@ -23,5 +23,5 @@ variable "lambda_runtime" {
 variable "s3_backend" {
   type        = string
   description = "Backend code files"
-  default     = "back/backend_code.zip""
+  default     = "back/backend_code.zip"
 }
