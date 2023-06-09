@@ -1,5 +1,5 @@
 resource "aws_cloudfront_distribution" "cf_dist" {
-  enabled             = true
+  enabled = true
   #aliases             = [var.domain_name]
   #default_root_object = "website/index.html"
   origin {

@@ -4,13 +4,13 @@ resource "aws_security_group" "rds" {
 
 
   ingress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-#    security_groups = [
-#      aws_security_group.memcache.id
-#    ]
+    #    security_groups = [
+    #      aws_security_group.memcache.id
+    #    ]
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_db_instance" "db_instance" {
   skip_final_snapshot  = true
 
 
-#  vpc_security_group_ids = [
-#    aws_security_group.rds.id
-#  ]
+  #  vpc_security_group_ids = [
+  #    aws_security_group.rds.id
+  #  ]
 }
