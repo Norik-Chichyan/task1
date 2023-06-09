@@ -1,11 +1,10 @@
 #S3 provisioning
 resource "aws_s3_bucket" "artifactes" {
-  bucket = "example-bucket"
+  bucket = "artifactes-bucket-unicname"
 }
 
-resource "aws_s3_bucket_acl" "example" {
+resource "aws_s3_bucket_public_access_block" "artifacte_public" {
   bucket = aws_s3_bucket.artifactes.id
-  acl    = "private"
 }
 
 resource "aws_s3_bucket_versioning" "versioning_enable" {

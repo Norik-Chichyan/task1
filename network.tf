@@ -26,3 +26,23 @@ resource "aws_subnet" "RDS-memcache" {
   }
 }
 
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.lambda.id
+  route_table_id = aws_default_route_table.def_rt.id
+}
+
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.RDS-memcache.id
+  route_table_id = aws_default_route_table.def_rt.id
+}
+resource "aws_default_route_table" "def_rt" {
+  default_route_table_id = aws_vpc.dev-vpc.default_route_table_id
+
+  route {
+    gateway_id = aws_internet_gateway.gw.id
+  }
+}
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.dev-vpc.id
+
+}
