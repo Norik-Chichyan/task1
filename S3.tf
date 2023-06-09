@@ -22,7 +22,8 @@ resource "aws_s3_object" "front" {
 
 resource "aws_s3_object" "back" {
   bucket = aws_s3_bucket_versioning.versioning_enable.id
-  key    = "back/"
+  key    = "back/backend_code.zip"
+  source = "back/backend_code.zip"
   depends_on = [aws_s3_bucket.artifactes]
 }
 data "aws_iam_policy_document" "bucket_policy_document" {
