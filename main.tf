@@ -21,3 +21,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
+#module "cloudfront" {
+#  source  = "terraform-aws-modules/cloudfront/aws"
+#  version = "3.2.1"
+#}
+
+data "aws_caller_identity" "current" {}
