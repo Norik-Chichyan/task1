@@ -3,10 +3,14 @@ terraform {
     aws = {
       source = "hashicorp/aws"
       version = "5.1.0"
+    random = "~> 0.9.0"
     }
   }
 }
 
+resource "random_id" "name-prefix" {
+  byte_length = 8
+}
 #terraform {
 #  backend "s3" {
 #    bucket         = "terraform-state-github-actions"
@@ -27,3 +31,9 @@ provider "aws" {
 #}
 
 data "aws_caller_identity" "current" {}
+
+resource "random_string" "random" {
+  length           = 6
+  special          = true
+  override_special = "/@£$"
+}

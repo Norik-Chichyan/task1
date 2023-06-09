@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "cf_dist" {
   enabled             = true
-  aliases             = [var.domain_name]
-  default_root_object = "website/index.html"
+  #aliases             = [var.domain_name]
+  #default_root_object = "website/index.html"
   origin {
     domain_name = aws_s3_bucket.artifactes.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.artifactes.id
@@ -27,10 +27,6 @@ resource "aws_cloudfront_distribution" "cf_dist" {
       restriction_type = "whitelist"
       locations        = ["IN", "US", "CA"]
     }
-  }
-  tags = {
-    "Project"   = "hands-on.cloud"
-    "ManagedBy" = "Terraform"
   }
   viewer_certificate {
     cloudfront_default_certificate = true

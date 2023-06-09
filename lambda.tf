@@ -38,5 +38,6 @@ resource "aws_lambda_function" "back_lambda_function" {
   role          = aws_iam_role.iam_for_lambda.arn
   s3_bucket     = aws_s3_bucket.artifactes.id
   s3_key        = var.s3_backend
+  depends_on = [aws_s3_bucket.artifactes]
 }
 

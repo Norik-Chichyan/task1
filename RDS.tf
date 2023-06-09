@@ -26,7 +26,7 @@ resource "aws_db_instance" "db_instance" {
   skip_final_snapshot  = true
 
 
-  vpc_security_group_ids = [
-    aws_security_group.rds.id
-  ]
+#  vpc_security_group_ids = [
+#    aws_security_group.rds.id
+#  ]
 }

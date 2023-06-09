@@ -8,10 +8,10 @@ resource "aws_security_group" "memcache" {
     from_port   = 11211
     to_port     = 11211
     protocol    = "tcp"
-    #cidr_blocks = ["0.0.0.0/0"]
-    security_groups = [
-      aws_security_group.rds.id  # Provide the ID of the source security group
-    ]
+    cidr_blocks = ["0.0.0.0/0"]
+#    security_groups = [
+#      aws_security_group.rds.id  # Provide the ID of the source security group
+#    ]
   }
 }
 

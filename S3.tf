@@ -1,6 +1,6 @@
 #S3 provisioning
 resource "aws_s3_bucket" "artifactes" {
-  bucket = "artifactes-bucket-unicname"
+  bucket = "artifactes-bucket-${random_id.name-prefix.hex}"
 }
 
 resource "aws_s3_bucket_public_access_block" "artifacte_public" {
