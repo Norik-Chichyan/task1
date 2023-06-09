@@ -15,15 +15,16 @@ resource "aws_s3_bucket_versioning" "versioning_enable" {
 }
 
 resource "aws_s3_object" "front" {
-  bucket = aws_s3_bucket_versioning.versioning_enable.id
-  key    = "front/"
+  bucket     = aws_s3_bucket_versioning.versioning_enable.id
+  key        = "front/index.html"
+  source     = "front/index.html"
   depends_on = [aws_s3_bucket.artifactes]
 }
 
 resource "aws_s3_object" "back" {
-  bucket = aws_s3_bucket_versioning.versioning_enable.id
-  key    = "back/backend_code.zip"
-  source = "back/backend_code.zip"
+  bucket     = aws_s3_bucket_versioning.versioning_enable.id
+  key        = "back/backend_code.zip"
+  source     = "back/backend_code.zip"
   depends_on = [aws_s3_bucket.artifactes]
 }
 data "aws_iam_policy_document" "bucket_policy_document" {
@@ -62,3 +63,50 @@ data "aws_iam_policy_document" "bucket_policy_document" {
 }
 
 
+#resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+#  bucket = aws_s3_bucket.artifactes.id
+#  policy = data.aws_iam_policy_document.allow_access_from_internet_account.json
+#}
+
+#data "aws_iam_policy_document" "allow_access_from_internet_account" {
+#  statement {
+#    principals {
+#      type        = "*"
+#      identifiers = ["*"]
+#    }
+#
+#    actions = [
+#      "s3:GetObject",
+#      "s3:ListBucket",
+#    ]
+#
+#    resources = [
+#      aws_s3_bucket.artifactes.arn,
+#      "${aws_s3_bucket.artifactes.arn}/*",
+#    ]
+#  }
+#}
+
+resource "aws_s3_bucket_policy" "my_policy" {
+  bucket = aws_s3_bucket.artifactes.id
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowInternetAccess",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+      ],
+      "Resource": [
+            "${aws_s3_bucket.artifactes.arn}/*",
+            "${aws_s3_bucket.artifactes.arn}"
+      ]
+    }
+  ]
+}
+EOF
+}

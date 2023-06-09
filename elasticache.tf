@@ -1,17 +1,12 @@
-# Create a security group for the Memcache cluster
 resource "aws_security_group" "memcache" {
   name        = "memcache-sg"
   description = "Security group for Memcache cluster"
-
 
   ingress {
     from_port   = 11211
     to_port     = 11211
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-#    security_groups = [
-#      aws_security_group.rds.id  # Provide the ID of the source security group
-#    ]
   }
 }
 
