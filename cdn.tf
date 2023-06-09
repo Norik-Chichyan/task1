@@ -1,7 +1,5 @@
 resource "aws_cloudfront_distribution" "cf_dist" {
   enabled = true
-  #aliases             = [var.domain_name]
-  #default_root_object = "website/index.html"
   origin {
     domain_name = aws_s3_bucket.artifactes.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.artifactes.id
