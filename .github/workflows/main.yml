@@ -25,4 +25,4 @@ jobs:
         run: terraform init
 
       - name: plan Terraform
-        run: terraform destroy --auto-approve
+        run: terraform apply --auto-approve
