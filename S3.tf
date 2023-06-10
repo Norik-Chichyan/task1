@@ -3,9 +3,9 @@ resource "aws_s3_bucket" "artifactes" {
   bucket = "artifactes-bucket-${random_id.name-prefix.hex}"
 }
 
-#resource "aws_s3_bucket_public_access_block" "artifacte_public" {
-#  bucket = aws_s3_bucket.artifactes.id
-#}
+resource "aws_s3_bucket_public_access_block" "artifacte_public" {
+  bucket = aws_s3_bucket.artifactes.id
+}
 
 resource "aws_s3_bucket_versioning" "versioning_enable" {
   bucket = aws_s3_bucket.artifactes.id
@@ -101,29 +101,19 @@ resource "aws_s3_bucket_policy" "my_policy" {
       ]
     },
     {
-      "Sid": "AllowLambdaAccess",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${aws_s3_bucket.artifactes.id}/*"
-    },
-    {
         "Sid": "AllowCloudFrontServicePrincipalReadOnly",
         "Effect": "Allow",
         "Principal": {
             "Service": "cloudfront.amazonaws.com"
         },
         "Action": "s3:GetObject",
-        "Resource": "${aws_s3_bucket.artifactes.id}/*",
+        "Resource": "${aws_s3_bucket.artifactes.arn}/*",
         "Condition": {
             "StringEquals": {
                 "AWS:SourceArn": "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${aws_cloudfront_distribution.cf_dist.id}"
             }
         }
     }
-
   ]
 }
 EOF
