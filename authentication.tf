@@ -1,6 +1,6 @@
 resource "aws_cognito_user_pool" "user_pool" {
-  name = "your-user-pool-name"
-  # Add any additional configuration options as needed
+  name = "employees"
+
 }
 
 resource "aws_cognito_user_pool_client" "user_pool_client" {

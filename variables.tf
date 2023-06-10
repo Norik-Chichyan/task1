@@ -25,3 +25,9 @@ variable "s3_backend" {
   description = "Backend code files"
   default     = "back/backend_code.zip"
 }
+
+variable "terraform_state_file_lock" {
+  type        = string
+  description = "State file lock"
+  default     = "terraform-state-lock-dynamoDB"
+}

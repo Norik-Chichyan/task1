@@ -16,7 +16,7 @@ resource "random_id" "name-prefix" {
 }
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-github-actions-task"
+    bucket         = "buket-for-terraform-backend-task1"
     key            = "state/terraform.tfstate"
     dynamodb_table = "terraform-state-lock-dynamo"
     region         = "us-east-1"
