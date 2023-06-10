@@ -62,27 +62,36 @@ resource "aws_s3_object" "back" {
 #
 #}
 
-#resource "aws_s3_bucket_policy" "my_policy" {
-#  bucket     = aws_s3_bucket.artifactes.id
-#  policy     = <<EOF
-#{
-#  "Version": "2012-10-17",
-#  "Statement": [
-#    {
-#      "Sid": "AllowInternetAccess",
-#      "Effect": "Allow",
-#      "Principal": "*",
-#      "Action": [
-#            "s3:GetObject",
-#            "s3:ListBucket"
-#      ],
-#      "Resource": [
-#            "${aws_s3_bucket.artifactes.arn}/*",
-#            "${aws_s3_bucket.artifactes.arn}"
-#      ]
-#    }
-#  ]
-#}
-#EOF
-#  depends_on = [aws_s3_bucket.artifactes]
-#}
+resource "aws_s3_bucket_policy" "my_policy" {
+  bucket     = aws_s3_bucket.artifactes.id
+  policy     = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowInternetAccess",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+      ],
+      "Resource": [
+            "${aws_s3_bucket.artifactes.arn}/*",
+            "${aws_s3_bucket.artifactes.arn}"
+      ]
+    },
+    {
+      "Sid": "AllowLambdaAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.artifactes.id}/*"
+    }
+  ]
+}
+EOF
+  depends_on = [aws_s3_bucket.artifactes]
+}
