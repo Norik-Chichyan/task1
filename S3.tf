@@ -27,69 +27,44 @@ resource "aws_s3_object" "back" {
   source     = "back/backend_code.zip"
   depends_on = [aws_s3_bucket.artifactes]
 }
-data "aws_iam_policy_document" "bucket_policy_document" {
-  statement {
-    actions = ["s3:GetObject"]
-    resources = [
-      aws_s3_bucket.artifactes.arn,
-      "${aws_s3_bucket.artifactes.arn}/*"
-    ]
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
-    }
-  }
-
-  statement {
-    actions = ["s3:GetObject"]
-    resources = [
-      aws_s3_bucket.artifactes.arn,
-      "${aws_s3_bucket.artifactes.arn}/*"
-    ]
-    principals {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:SourceArn"
-
-      values = [
-        "arn:aws:cloudfront::${data.aws_caller_identity.current.id}:distribution/${aws_cloudfront_distribution.cf_dist.id}"
-      ]
-    }
-  }
-
-}
-
-
-#resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
-#  bucket = aws_s3_bucket.artifactes.id
-#  policy = data.aws_iam_policy_document.allow_access_from_internet_account.json
-#}
-
-#data "aws_iam_policy_document" "allow_access_from_internet_account" {
+#data "aws_iam_policy_document" "bucket_policy_document" {
 #  statement {
-#    principals {
-#      type        = "*"
-#      identifiers = ["*"]
-#    }
-#
-#    actions = [
-#      "s3:GetObject",
-#      "s3:ListBucket",
-#    ]
-#
+#    actions = ["s3:GetObject"]
 #    resources = [
 #      aws_s3_bucket.artifactes.arn,
-#      "${aws_s3_bucket.artifactes.arn}/*",
+#      "${aws_s3_bucket.artifactes.arn}/*"
 #    ]
+#    principals {
+#      type        = "AWS"
+#      identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
+#    }
 #  }
+#
+#  statement {
+#    actions = ["s3:GetObject"]
+#    resources = [
+#      aws_s3_bucket.artifactes.arn,
+#      "${aws_s3_bucket.artifactes.arn}/*"
+#    ]
+#    principals {
+#      type        = "Service"
+#      identifiers = ["cloudfront.amazonaws.com"]
+#    }
+#    condition {
+#      test     = "StringEquals"
+#      variable = "AWS:SourceArn"
+#
+#      values = [
+#        "arn:aws:cloudfront::${data.aws_caller_identity.current.id}:distribution/${aws_cloudfront_distribution.cf_dist.id}"
+#      ]
+#    }
+#  }
+#
 #}
 
 resource "aws_s3_bucket_policy" "my_policy" {
-  bucket = aws_s3_bucket.artifactes.id
-  policy = <<EOF
+  bucket     = aws_s3_bucket.artifactes.id
+  policy     = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -109,4 +84,5 @@ resource "aws_s3_bucket_policy" "my_policy" {
   ]
 }
 EOF
+  depends_on = [aws_s3_bucket.artifactes]
 }
