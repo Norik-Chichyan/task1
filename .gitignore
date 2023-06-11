@@ -23,3 +23,5 @@ override.tf.json
 
 # If you use VSCode, ignore the .vscode directory
 .vscode/
+
+.infracost/
